@@ -1,4 +1,3 @@
-// app/page.tsx
 "use client";
 
 import React, { useCallback, useState } from "react";
@@ -16,32 +15,10 @@ import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
  */
 
 export default function Page() {
-  const { connection } = useConnection();
+  // const { connection } = useConnection();
   const { publicKey, disconnect } = useWallet();
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState<string | null>(null);
-
-  const requestAirdrop = useCallback(async () => {
-    if (!publicKey) {
-      setMsg("Connect wallet first");
-      return;
-    }
-    try {
-      setLoading(true);
-      setMsg("Requesting airdrop...");
-      // request 1 SOL on devnet
-      const sig = await connection.requestAirdrop(
-        publicKey as PublicKey,
-        LAMPORTS_PER_SOL
-      );
-      await connection.confirmTransaction(sig, "confirmed");
-      setMsg(`Airdrop successful — tx: ${sig}`);
-    } catch (err: any) {
-      setMsg(`Airdrop failed: ${err?.message ?? String(err)}`);
-    } finally {
-      setLoading(false);
-    }
-  }, [connection, publicKey]);
+  // const [loading, setLoading] = useState(false);
+  // const [msg, setMsg] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -71,13 +48,6 @@ export default function Page() {
                 </div>
                 <div className="flex gap-2 mt-2">
                   <button
-                    onClick={() => void requestAirdrop()}
-                    className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-60"
-                    disabled={loading}
-                  >
-                    {loading ? "Requesting..." : "Request Airdrop (1 SOL)"}
-                  </button>
-                  <button
                     onClick={() => void disconnect()}
                     className="px-3 py-1 bg-red-500 text-white rounded"
                   >
@@ -90,7 +60,7 @@ export default function Page() {
             )}
           </div>
 
-          {msg && <div className="text-sm text-gray-700 mt-2">{msg}</div>}
+          {/* {msg && <div className="text-sm text-gray-700 mt-2">{msg}</div>} */}
         </section>
 
         {/* <footer className="mt-6 text-xs text-gray-500">
